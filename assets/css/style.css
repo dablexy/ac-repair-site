@@ -1,0 +1,475 @@
+/* =========================================================
+   城南家电维修 · 单页样式
+   写法：手机优先（默认样式即手机），再用 min-width 往上加
+   断点：768px（平板）、1024px（桌面）
+   ========================================================= */
+
+:root {
+  --blue: #1F4E79;        /* 主色，按钮与标题标签 */
+  --blue-dark: #173B5C;   /* 按钮按下态 */
+  --ink: #262626;         /* 正文 */
+  --gray: #595959;        /* 次要文字 */
+  --line: #E5E8EC;
+  --bg: #F5F7FA;          /* 页面底色 */
+  --white: #FFFFFF;
+  --radius: 10px;
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  font-family: "PingFang SC", "Microsoft YaHei", system-ui, -apple-system, sans-serif;
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--ink);
+  background: var(--bg);
+  overflow-x: hidden;   /* 兜底：任何元素溢出都不让整页可以左右拖 */
+  padding-bottom: 76px; /* 给底部常驻「立即咨询」条留位置，别挡住表单和页脚 */
+}
+
+img { display: block; max-width: 100%; height: auto; }
+
+a { color: var(--blue); text-decoration: none; }
+
+/* 统一容器：左右留 20px，最大 1120px 居中 */
+.wrap {
+  width: 100%;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* ---------------- 顶部栏 ---------------- */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: rgba(255, 255, 255, 0.96);
+  border-bottom: 1px solid var(--line);
+  backdrop-filter: saturate(180%) blur(6px);
+}
+
+.topbar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 56px;
+}
+
+.brand { display: flex; align-items: center; gap: 8px; }
+
+.brand-mark {
+  width: 28px; height: 28px; line-height: 28px;
+  text-align: center;
+  border-radius: 6px;
+  background: var(--blue);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.brand-name { font-size: 15px; font-weight: 700; letter-spacing: 0.5px; }
+
+.tel {
+  flex: 0 0 auto;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--blue);
+  white-space: nowrap;
+  display: inline-flex;      /* 顶栏电话本身是链接，撑到 44px 才够手指点 */
+  align-items: center;
+  min-height: 44px;
+  padding: 0 6px;
+  margin-right: -6px;
+}
+
+/* 手机上顶部只显示「立即拨打」，否则长号码会把顶栏撑破 */
+.tel-short { display: inline; }
+.tel-full { display: none; }
+
+/* ---------------- 屏 1：首屏 ---------------- */
+.hero {
+  background: linear-gradient(180deg, #EAF1F8 0%, #F5F7FA 100%);
+  padding: 32px 0 40px;
+}
+
+.hero-inner { display: flex; flex-direction: column; gap: 18px; }
+
+/* 首屏文字三块之间留出呼吸感，否则标题会贴着副标题 */
+.hero-copy { display: flex; flex-direction: column; gap: 12px; }
+
+.hero-title {
+  margin: 0;
+  font-size: 30px;
+  line-height: 1.28;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  color: var(--blue-dark);
+}
+
+.hero-sub {
+  margin: 0;
+  font-size: 15px;
+  color: var(--gray);
+}
+
+.hero-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;              /* 触控目标不小于 44px */
+  padding: 0 20px;
+  border: 0;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.btn-primary { background: var(--blue); color: #fff; }
+.btn-primary:active { background: var(--blue-dark); }
+
+.btn-ghost {
+  background: #fff;
+  color: var(--blue);
+  border: 1px solid var(--blue);
+}
+
+.btn-block { width: 100%; margin-top: 4px; }
+
+.hero-media {
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--line);
+}
+
+/* ---------------- 通用区块 ---------------- */
+.section { padding: 36px 0; }
+.section-alt { background: #fff; }
+
+.section-head { margin-bottom: 18px; }
+
+.eyebrow {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--blue);
+  background: #EAF1F8;
+  border-radius: 3px;
+  padding: 2px 8px;
+}
+
+.section-title {
+  margin: 8px 0 0;
+  font-size: 22px;
+  line-height: 1.35;
+  font-weight: 800;
+  color: var(--ink);
+}
+
+/* 网格：手机一列，768 两列，1024 三列 */
+.grid { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; grid-template-columns: 1fr; }
+.grid-3 { grid-template-columns: 1fr; }
+
+.card {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 16px 16px 14px;
+}
+
+.section-alt .card { background: var(--bg); }
+
+.card h3 {
+  margin: 0 0 6px;
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--blue-dark);
+}
+
+.card p { margin: 0; font-size: 14.5px; color: var(--gray); line-height: 1.65; }
+
+/* 案例卡片 */
+.case {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.case img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+
+.case-cap {
+  margin: 0;
+  padding: 12px 14px 14px;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.case-cap span { display: block; margin-top: 4px; font-size: 13.5px; font-weight: 400; color: var(--gray); }
+
+/* ---------------- 屏 4：师傅 ---------------- */
+.about { display: flex; flex-direction: column; gap: 20px; }
+
+.about-media {
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--line);
+}
+
+.about-text p { margin: 0 0 12px; font-size: 15px; color: var(--gray); }
+
+.ticks { list-style: none; margin: 0 0 12px; padding: 0; }
+
+.ticks li {
+  position: relative;
+  padding-left: 22px;
+  margin-bottom: 6px;
+  font-size: 15px;
+}
+
+.ticks li::before {
+  content: "✓";
+  position: absolute;
+  left: 0; top: 0;
+  color: var(--blue);
+  font-weight: 700;
+}
+
+.muted { color: #8A8F98 !important; font-size: 13px !important; }
+
+/* ---------------- 屏 5：常见问题 ---------------- */
+.faq { display: flex; flex-direction: column; gap: 10px; }
+
+.faq-item {
+  background: var(--bg);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.faq-q {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 52px;
+  padding: 12px 16px;
+  background: transparent;
+  border: 0;
+  font-family: inherit;
+  font-size: 15.5px;
+  font-weight: 600;
+  color: var(--ink);
+  text-align: left;
+  cursor: pointer;
+}
+
+/* 加号图标，展开时转成减号 */
+.faq-icon {
+  position: relative;
+  flex: 0 0 auto;
+  width: 18px; height: 18px;
+  border: 1px solid #C9CFD8;
+  border-radius: 50%;
+}
+
+.faq-icon::before,
+.faq-icon::after {
+  content: "";
+  position: absolute;
+  left: 50%; top: 50%;
+  background: var(--blue);
+  transform: translate(-50%, -50%);
+}
+
+.faq-icon::before { width: 8px; height: 1.5px; }
+.faq-icon::after  { width: 1.5px; height: 8px; transition: height 0.2s; }
+
+.faq-q[aria-expanded="true"] .faq-icon::after { height: 0; }
+
+.faq-a {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.25s ease;
+}
+
+.faq-a p {
+  margin: 0;
+  padding: 0 16px 14px;
+  font-size: 14.5px;
+  color: var(--gray);
+  line-height: 1.7;
+}
+
+.faq-item[data-open="true"] .faq-a { max-height: 260px; }
+
+/* ---------------- 屏 6：联系与表单 ---------------- */
+.contact-grid { display: flex; flex-direction: column; gap: 22px; }
+
+.info-list {
+  margin: 0 0 16px;
+  display: grid;
+  grid-template-columns: 64px 1fr;
+  row-gap: 10px;
+  font-size: 15px;
+}
+
+.info-list dt { color: var(--gray); font-size: 14px; }
+.info-list dd { margin: 0; }
+
+/* 电话是可点的 tel 链接，撑到 44px 高，手指才好按 */
+.info-list dd a {
+  display: inline-block;
+  padding: 12px 0;
+  min-height: 44px;
+  box-sizing: border-box;
+}
+
+.qr { display: flex; align-items: center; gap: 12px; }
+
+.qr img {
+  width: 120px; height: 120px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+
+.qr span { font-size: 13px; color: #8A8F98; }
+
+.form {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 18px 16px 16px;
+}
+
+.field { margin-bottom: 14px; }
+
+.field label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.field input,
+.field textarea {
+  width: 100%;
+  padding: 12px 12px;
+  border: 1px solid #D6DBE2;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 15px;
+  color: var(--ink);
+  background: #fff;
+}
+
+.field input:focus,
+.field textarea:focus {
+  outline: none;
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(31, 78, 121, 0.12);
+}
+
+.field textarea { resize: vertical; }
+
+.err { margin: 6px 0 0; font-size: 13px; color: #C0392B; min-height: 0; }
+
+.form-tip { margin: 10px 0 0; font-size: 13px; color: var(--gray); }
+
+.form-ok {
+  margin: 10px 0 0;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: #EAF5EE;
+  color: #2E7D5B;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* ---------------- 页脚 ---------------- */
+.footer {
+  background: #fff;
+  border-top: 1px solid var(--line);
+  padding: 22px 0 90px;     /* 底部多留白，避免被常驻按钮压住 */
+  font-size: 13.5px;
+  color: var(--gray);
+}
+
+.footer p { margin: 0 0 4px; }
+
+/* ---------------- 移动端底部常驻按钮 ---------------- */
+.fab {
+  position: fixed;
+  left: 16px; right: 16px; bottom: 16px;
+  z-index: 30;
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: var(--blue);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  box-shadow: 0 6px 18px rgba(31, 78, 121, 0.28);
+}
+
+/* =========================================================
+   平板 ≥768px
+   ========================================================= */
+@media (min-width: 768px) {
+  .tel-short { display: none; }
+  .tel-full { display: inline; }
+
+  .hero { padding: 48px 0 56px; }
+  .hero-title { font-size: 36px; }
+  .hero-sub { font-size: 16px; }
+
+  .hero-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 28px;
+  }
+
+  .hero-copy { padding-right: 8px; }
+  .hero-media { margin: 0; }
+
+  .grid-3 { grid-template-columns: repeat(2, 1fr); }
+
+  .section { padding: 48px 0; }
+  .section-title { font-size: 24px; }
+
+  .about { flex-direction: row; align-items: flex-start; gap: 28px; }
+  .about-media { flex: 0 0 42%; }
+  .about-text { flex: 1; }
+
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; align-items: start; }
+
+  .fab { display: none; }            /* 平板以上不需要悬浮按钮 */
+  body { padding-bottom: 0; }        /* 上面那条常驻按钮没了，底部留白也去掉 */
+  .qr img { width: 160px; height: 160px; }   /* 大屏空间够，二维码放大更好扫 */
+  .footer { padding-bottom: 28px; }
+}
+
+/* =========================================================
+   桌面 ≥1024px
+   ========================================================= */
+@media (min-width: 1024px) {
+  .hero-title { font-size: 42px; }
+  .grid-3 { grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .section { padding: 60px 0; }
+  .brand-name { font-size: 16px; }
+  .tel { font-size: 14px; }
+}
