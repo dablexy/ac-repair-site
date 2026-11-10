@@ -40,23 +40,30 @@ python -m http.server 8000
 | 咨询三通道 | 电话 `tel:` 直拨、微信二维码、在线表单 |
 | 分享卡片 | `og:title` / `og:description` / `og:image`（1200×630） |
 
-## 表单接收
+[//]: # (## 表单接收)
 
-`assets/js/main.js` 里的 `FORM_ENDPOINT` 为空时是演示模式，页面会明写「这条信息并没有真的发出去」。接真实收信只改这一行：
+[//]: # ()
+[//]: # (`assets/js/main.js` 里的 `FORM_ENDPOINT` 为空时是演示模式，页面会明写「这条信息并没有真的发出去」。接真实收信只改这一行：)
 
-```js
-var FORM_ENDPOINT = "https://formspree.io/f/你的表单ID";
-```
+[//]: # ()
+[//]: # (```js)
 
-Formspree 免费版 50 条/月，一个小店的咨询量足够。
+[//]: # (var FORM_ENDPOINT = "https://formspree.io/f/你的表单ID";)
+
+[//]: # (```)
+
+[//]: # ()
+[//]: # (Formspree 免费版 50 条/月，一个小店的咨询量足够。)
 
 ## 部署
 
-静态托管，任选其一：GitHub Pages（当前使用）、EdgeOne Pages、客户自有 Nginx。
+当前已上线：**https://dablexy.github.io/ac-repair-site/**（GitHub Pages，分支 `main`，目录 `/(root)`）。
 
-GitHub Pages：Settings → Pages → 分支 `main` → 目录 `/(root)`。构建完成后地址是 `https://<用户名>.github.io/<仓库名>/`。
+[//]: # ()
+[//]: # (换托管时只改 `index.html` 顶部这三处的网址：`og:url`、`og:image`、`<link rel="canonical">`。正文里所有 `assets/...` 都是相对路径，换域名不用动，图片也不用重传。)
 
-上线后必须把 `index.html` 的 `og:image` 换成绝对地址 `https://你的域名/assets/img/share.jpg`，否则微信转发没有图。
+[//]: # ()
+[//]: # (`og:image` 必须写成完整的 https 地址，写相对路径微信转发不出图——这是部署后最常被漏掉的一条。)
 
 ## 图片来源
 
