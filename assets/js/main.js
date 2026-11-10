@@ -40,9 +40,11 @@
   var okBox = document.getElementById("formOk");
   var submitBtn = form.querySelector('button[type="submit"]');
 
-  // 表单提交地址：现在没接后端，留空时只在页面上显示成功提示。
-  // 上线前改成你的 Formspree 地址，例如 "https://formspree.io/f/xxxxxxx"
-  var FORM_ENDPOINT = "";
+  // 表单提交地址：填了就真的发出去，空着只在页面上显示成功提示。
+  // 当前用 FormSubmit（免注册）：https://formsubmit.co/ajax/邮箱
+  // 首次提交后，邮箱会收到一封"激活"邮件，点一下确认，之后每一条咨询都会转发到邮箱。
+  // 换成别的服务（如 Formspree）时，只改下面这一行的地址。
+  var FORM_ENDPOINT = "https://formsubmit.co/ajax/2470781363@qq.com";
 
   function setErr(name, msg) {
     var el = form.querySelector('[data-err="' + name + '"]');
@@ -106,20 +108,42 @@
       // 还没接后端：演示模式。提示语故意写清「没真的发出去」，
       // 免得哪天忘了接后端就上线，客户以为提交成功、其实什么都没收到。
       window.setTimeout(function () {
-        if (okBox) okBox.textContent = "演示模式：表单还没接后端，这条信息并没有真的发出去。接上 Formspree 之后才会真的送到我手机上。";
+        if (okBox) okBox.textContent = "演示模式：表单还没接后端，这条信息并没有真的发出去。接上表单服务（FormSubmit）之后才会真的送到我手机上。";
         finish(true);
       }, 600);
-      console.info("[提示] 表单未接后端，仅在页面显示成功。上线前把 main.js 里的 FORM_ENDPOINT 换成 Formspree 地址。");
+      console.info("[提示] 表单未接后端，仅在页面显示成功。上线前把 main.js 里的 FORM_ENDPOINT 换成 FormSubmit 地址。");
       return;
     }
 
-    var data = new FormData(form);
+    // 用 JSON 提交，FormSubmit 的 ajax 接口认这个格式，返回 JSON 而不是跳转页面
+    var payload = {
+      name: form.querySelector("#name").value.trim(),
+      phone: form.querySelector("#phone").value.trim(),
+      msg: form.querySelector("#msg").value.trim(),
+      _subject: "网站咨询｜小宇家电维修",
+      _template: "table",
+      _captcha: "false"
+    };
     fetch(FORM_ENDPOINT, {
       method: "POST",
-      body: data,
-      headers: { "Accept": "application/json" }
+      body: JSON.stringify(payload),
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      }
     })
-      .then(function (res) { finish(res.ok); })
+      .then(function (res) {
+        // FormSubmit 激活前也返回 HTTP 200，但正文里是 "success":"false"，
+        // 所以不能只看状态码，必须读正文判断，否则会给客户一个假的"已提交"。
+        return res.text().then(function (txt) {
+          var ok = res.ok && txt.indexOf('"success":"false"') === -1;
+          finish(ok);
+          if (!ok && okBox) {
+            okBox.hidden = false;
+            okBox.textContent = "没提交成功。你可以直接打电话，或者稍后再点一次。";
+          }
+        });
+      })
       .catch(function () {
         // 网络失败：不清空表单，客户不用重填（F-06）
         finish(false);
