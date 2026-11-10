@@ -16,6 +16,9 @@
   <meta property="og:type" content="website">
   <link rel="canonical" href="https://dablexy.github.io/ac-repair-site/">
   <link rel="stylesheet" href="assets/css/style.css">
+  <!-- 首屏主图是页面上最大的一张图，提前告诉浏览器优先下载，
+      LCP（页面主图出现的耗时）能早一点。改图时这里和下面的 src 一起改。 -->
+  <link rel="preload" as="image" href="assets/img/hero.jpg" fetchpriority="high">
   <!-- 浏览器标签页小图标，内联 SVG，省一个图片请求，也不用额外文件 -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTQiIGZpbGw9IiMxRjRFNzkiLz48dGV4dCB4PSIzMiIgeT0iNDYiIGZvbnQtc2l6ZT0iNDIiIGZvbnQtZmFtaWx5PSJNaWNyb3NvZnQgWWFIZWksc2Fucy1zZXJpZiIgZm9udC13ZWlnaHQ9IjcwMCIgZmlsbD0iI2ZmZmZmZiIgdGV4dC1hbmNob3I9Im1pZGRsZSI+5bCPPC90ZXh0Pjwvc3ZnPg==">
 </head>
@@ -47,8 +50,10 @@
       </div>
     </div>
     <div class="hero-media">
-      <!-- 首屏主图：assets/img/hero.jpg（1600×1200）。换真实照片时保持同名，代码不用改 -->
-      <img src="assets/img/hero.jpg" alt="维修师傅在客户家中拆洗壁挂空调" loading="eager">
+      <!-- 首屏主图：assets/img/hero.jpg（1600×1200）。换真实照片时保持同名，代码不用改。
+           width/height 写的是原图尺寸，配合 CSS 的 width:100%、height:auto，
+           只用来让浏览器提前算好位置，避免图片加载时页面跳动。 -->
+      <img src="assets/img/hero.jpg" alt="维修师傅在客户家中拆洗壁挂空调" width="1600" height="1200" loading="eager" fetchpriority="high" decoding="async">
     </div>
   </div>
 </section>
